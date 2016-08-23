@@ -8,7 +8,7 @@
 
 usage="$(basename "$0") [-h] [-w num] [-s num] [-i address] 
 -- program to continuously run a traceroute command in order to 
-   test our internet connection and gain data on drops
+   test our internet connection and collect data on drops
 
 options:
     -h  show this help text
@@ -22,9 +22,10 @@ options:
 OPTIND=1         # Reset in case getopts has been used previously in the shell.
 
 # Initialize our own variables:
-wait_time=500
+wait_time=1
 sleep_time=1
 ip_address="8.8.8.8"
+start=`date`
 
 while getopts "hw:s:i:" opt; do
     case "$opt" in
@@ -44,6 +45,16 @@ shift $((OPTIND-1))
 
 [ "$1" = "--" ] && shift
 
+echo "+++++++++++++++++"
+echo "pebble Traceroute"
+echo "+++++++++++++++++"
+echo
+echo "Timeout wait time: $wait_time second(s)."
+echo "Loop delay: $sleep_time second(s)."
+echo "Pinging address: " $ip_address
+echo "Start time: " $start
+echo
+
 # actual loop
 while :; 
 do 
@@ -51,7 +62,7 @@ do
 	# Note %N option doesn't work on Mac
 	date +%s%N
 	# run the traceroute command
-	traceroute -q 1 -W $wait_time $ip_address
+	traceroute -q 1 -w $wait_time $ip_address 2>/dev/null
 	# delay before next loop iteration
 	sleep $sleep_time
 done
