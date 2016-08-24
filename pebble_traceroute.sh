@@ -62,7 +62,7 @@ do
 	# Note %N option doesn't work on Mac
 	date -Ins
 	# run the traceroute command
-	traceroute -q 1 -w $wait_time $ip_address 2>/dev/null
+	traceroute -q 1 -w $wait_time $ip_address
 	# delay before next loop iteration
 	sleep $sleep_time
 done
