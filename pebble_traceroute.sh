@@ -60,7 +60,7 @@ while :;
 do 
 	# print Unix time with nanoseconds.  
 	# Note %N option doesn't work on Mac
-	date +%s%N
+	date -Ins
 	# run the traceroute command
 	traceroute -q 1 -w $wait_time $ip_address 2>/dev/null
 	# delay before next loop iteration
